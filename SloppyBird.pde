@@ -1,5 +1,6 @@
 Environment environment;
 Splash splash;
+Background background;
 
 int speed = 30;
 boolean started = false;
@@ -13,12 +14,15 @@ void setup(){
   noStroke();
   
   splash = new Splash();
+  background = new Background();
 }
 
 void draw(){
-  background(0, 0, 0);
+  background(0, 0, 200);
   stroke(255);
   fill(255);
+  
+  background.draw();
   
   if(started){
     if(!environment.active) gameOver();

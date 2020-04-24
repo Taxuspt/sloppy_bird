@@ -97,7 +97,6 @@ static class BrainStruct{
   }
   
   static int[] getDefault(){
-    //return new int[]{3, 6, 4, 1};
     return new int[]{3, 6, 4, 1};
   } 
 }

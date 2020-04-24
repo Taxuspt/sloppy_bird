@@ -53,8 +53,9 @@ class Population {
   }
   
   void drawShortStatuses(){
-    textSize(16); textAlign(LEFT);
-    fill(players[0].bird.birdColor);
+    textSize(16); 
+    textAlign(LEFT);
+    fill(255);
     text("Global Best Fitness:" + globalBestFitness, 50, 20);
     text("Current Best Fitness:" + currentBestFitness, 50, 40);
     text("Current Gen:" + gen, 50, 60);
@@ -74,9 +75,7 @@ class Population {
     fill(255, 255, 255);
     noStroke();
     textSize(16); textAlign(LEFT);
-    fill(players[0].bird.birdColor);
     int vSpace = 20;
-    
     
     text("Global Best Fitness:" + globalBestFitness, 50, vSpace);
     text("Current Best Fitness:" + currentBestFitness, 50, 2*vSpace);

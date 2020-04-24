@@ -15,10 +15,14 @@ class Pipe {
   
   void draw(){
     if(!gone()){
+      fill(50, 205, 50);
+      stroke(255, 255, 255);
       rect(_x, 0, _w, _hy, 0, 0, 10, 10);
       rect(_x, _hy + _hh, _w, height - (_hy + _hh), 10, 10, 0, 0);
+      noFill();
       _x -= pipe_speed;    
     }
+    
   }
   
   int getRight(){

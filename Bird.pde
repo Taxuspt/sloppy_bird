@@ -11,6 +11,10 @@ class Bird {
   int birdColor = color(255, 255, 0);
   int textColor;
   
+  PImage bird = loadImage("bird.png");
+  PImage bird_up = loadImage("bird_up.png");
+  PImage bird_down = loadImage("bird_down.png");
+  
   Bird() {
     _setup((int)random(255));
   }
@@ -64,13 +68,24 @@ class Bird {
       return;
     }
 
-    fill(birdColor);
-    circle(_x, _y, 55);
-    _score += 1;
-    textSize(16); 
+    //fill(birdColor);
+    //circle(_x, _y, 55);
+    pushMatrix();
+    translate(-30, -30);
+    if(_vY > 0 ){
+      image(bird_down, _x, _y, 70, 60);
+    }else if(_vY <= 0 ){
+      image(bird_up, _x, _y, 70, 60);
+    } else {
+      image(bird, _x, _y, 70, 60);
+    }
+    popMatrix();
     
-    textAlign(CENTER);
-    fill(textColor);
-    text(_id, _x, _y);
+    _score += 1;
+    
+    //textSize(16); 
+    //textAlign(CENTER);
+    //fill(0);
+    //text(_id, _x, _y);
   }
 }
