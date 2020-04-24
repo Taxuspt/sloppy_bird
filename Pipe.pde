@@ -25,11 +25,19 @@ class Pipe {
     return _x + _w;
   }
   
+  int getLeft(){
+    return _x;
+  }
+  
+  int getHy() {
+    return _hy;
+  }
+  
   boolean gone(){
     return (_x + _w) < 0;
   }
   
-  boolean colision(int x, int y){
+  boolean colision(float x, float y){
     if((x > _x) && (x < (_x + _w))){
       if((y < _hy) || (y > (_hy + _hh))){
         return true;

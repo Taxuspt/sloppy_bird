@@ -1,49 +1,76 @@
 final float GRAVITY = 0.2;
-final int birdColor = color(255, 255, 0);
 
 class Bird {
   float _x;
   float _y;
   float _vY;
   boolean active;
-  int score = 0;
+  long _score = 0;
+  int _id;
+
+  int birdColor = color(255, 255, 0);
+  int textColor;
   
   Bird() {
+    _setup((int)random(255));
+  }
+  
+  Bird(int id){
+    _setup(id);
+  }
+  
+  void _setup(int id){
+    _id = id;
     active = true;
     _x = width / 10;
     _y = height / 2;
     _vY = 0;
+    textColor = color((int)random(255), (int)random(255), (int)random(255));
   }
-  
+    
   float getY(){
     return _y;
+  }
+  
+  float getvY(){
+    return _vY;
   }
   
   float getX(){
     return _x;
   }
   
-  void flap(float i){
+  void flap(int i){
     _vY -= i;
   }
   
+  long getScore(){
+    return _score;
+  }
+  
   void draw(){
-    if(active){
-      _y += _vY;
-      _vY += GRAVITY;
-      if(_y < 0){
-        _y = 0;
-        _vY = 0;
-      }
-      if(_y > height){
-        active = false;
-      }
+    _y += _vY;
+    _vY += GRAVITY;
+    if(_y < 0){//{_y = 0; _vY = 0;}
+      active = false;
+      return;
     }
+    if(_y > height){
+      active = false;
+      return;
+    }
+    if(environment.pipeManager.colision(_x, _y)){
+      active = false;
+      return;
+    }
+
     fill(birdColor);
     circle(_x, _y, 55);
-    score += 1;
-    bestScore = score > bestScore ? score : bestScore;
-    textSize(32);
-    text(score, 40, 40); 
+    _score += 1;
+    textSize(16); 
+    
+    textAlign(CENTER);
+    fill(textColor);
+    text(_id, _x, _y);
   }
 }

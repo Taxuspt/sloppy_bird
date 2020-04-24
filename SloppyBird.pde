@@ -1,10 +1,9 @@
-int speed = 30;
-
 Environment environment;
 Splash splash;
 
+int speed = 30;
 boolean started = false;
-int bestScore = 0;
+long bestScore = 0;
 
 void setup(){
   frameRate(speed);  
@@ -13,18 +12,16 @@ void setup(){
   noFill();
   noStroke();
   
-  environment = new Environment();
   splash = new Splash();
 }
 
 void draw(){
   background(0, 0, 0);
-
   stroke(255);
   fill(255);
   
   if(started){
-    if(!environment.bird.active) gameOver();
+    if(!environment.active) gameOver();
     environment.draw();  
   } else {
     splash.draw();
@@ -45,12 +42,20 @@ void keyPressed(){
           frameRate(speed);
         }
         break;
+      
       case 'f':// flap wings
-        environment.bird.flap(4);
+        environment.flap();
         break;
-      case 'b': // start game
-        print('b');
-        if(!environment.bird.active) environment.reset();
+      
+      case 'b': // start ai bird
+        //started = true;
+        break;
+      case 't': // start training game
+        environment = new NaturalSelectionEnvironment();
+        started = true;
+        break;
+      case 'h': // start human game
+        environment = new HumanEnvironment();
         started = true;
         break;
     }
