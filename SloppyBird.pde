@@ -52,7 +52,7 @@ void keyPressed(){
         break;
       
       case 'b': // start ai bird
-        //started = true;
+        selectInput("Select a file to process:", "fileSelected");
         break;
       case 't': // start training game
         environment = new NaturalSelectionEnvironment();
@@ -63,6 +63,16 @@ void keyPressed(){
         started = true;
         break;
     }
+}
+
+void fileSelected(File selection) {
+  if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  } else {
+    println("User selected " + selection.getAbsolutePath());
+    environment = new AIEnvironment(loadBrainStruct(selection.getAbsolutePath()));
+    started = true;
+  }
 }
 
 void gameOver(){

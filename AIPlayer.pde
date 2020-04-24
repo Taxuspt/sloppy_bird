@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class AIPlayer implements Comparable<AIPlayer>{
   int id;
   boolean alive;
@@ -22,7 +24,7 @@ class AIPlayer implements Comparable<AIPlayer>{
     id = id_;
     alive = true;
     bird = new Bird(id);
-    nn = new NeuralNetwork(BrainStruct.getDefault());
+    nn = new NeuralNetwork(getDefaultStruct());
   }
   
   AIPlayer(int id_, BrainStruct brain){
@@ -83,20 +85,4 @@ class AIPlayer implements Comparable<AIPlayer>{
     return new AIPlayer(id, new BrainStruct(nn.structure, nn.weights, nn.bias));
   }
   
-}
-
-static class BrainStruct{
-  int[] structure;
-  Matrix[] W;
-  Matrix[] b;
-  
-  BrainStruct(int[] structure_, Matrix[] W_, Matrix[] b_){
-    structure = structure_;
-    W = W_;
-    b = b_;
-  }
-  
-  static int[] getDefault(){
-    return new int[]{3, 6, 4, 1};
-  } 
 }

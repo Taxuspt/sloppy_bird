@@ -95,6 +95,7 @@ class Population {
     if(currentBestFitness > globalBestFitness){
       globalBestFitness = currentBestFitness;
       globalBestPlayer = cloneBestPlayer();
+      globalBestPlayer.getBrain().save();
     }
     
     newPlayers[0] = globalBestPlayer.clone();

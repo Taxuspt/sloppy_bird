@@ -7,3 +7,12 @@ class Coordinate {
     y = y_;
   }
 }
+
+static float[] doubleToFloat(double[] doubleArray){
+  float[] floatArray = new float[doubleArray.length];
+  for (int i = 0 ; i < doubleArray.length; i++)
+  {
+      floatArray[i] = (float) doubleArray[i];
+  }
+  return floatArray;
+}
