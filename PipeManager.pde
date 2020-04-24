@@ -6,7 +6,7 @@ class PipeManager {
   
   int p = 3; // Number of pipes 
   int d = width / p; // Distance between them (them = the pipes)
-  int hh = 180; // Hole height (the actual hole the bird goes through)
+  int hh = 120; // Hole height (the actual hole the bird goes through)
   int h_min = 20; // Min height of hole (distance from ceiling)
   int h_max = height-240; // Max height of hole (distance from floor)
   
