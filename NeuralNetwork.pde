@@ -2,19 +2,22 @@ import Jama.*;
 
 class NeuralNetwork {
   
-  int[] structure;
+  Integer[] structure;
   Matrix[] weights;
   Matrix[] bias;
+  Matrix[] currentActivation;
   
-  NeuralNetwork(int[] structure_, Matrix[] W, Matrix[] b){
+  NeuralNetwork(Integer[] structure_, Matrix[] W, Matrix[] b){
+    structure = structure_;
+    currentActivation = _initCA();
     weights = W;
     bias = b;
-    structure = structure_;
   }
   
-  NeuralNetwork(int[] structure_) {
+  NeuralNetwork(Integer[] structure_) {
     
     structure = structure_;
+    currentActivation = _initCA();
     weights = new Matrix[structure.length-1];
     bias = new Matrix[structure.length-1];
     
@@ -22,26 +25,30 @@ class NeuralNetwork {
       Double he = Math.sqrt(2/structure[i-1]); // He initialization
       weights[i-1] = Matrix.random(structure[i], structure[i-1]).minus(new Matrix(structure[i], structure[i-1], 0.5)).times(1);
       bias[i-1] = new Matrix(structure[i], 1, 0);
-      //print("Weights "+(i-1));
-      //weights[i-1].print(1, 3);
-      //print("Bias "+(i-1));
-      //bias[i-1].print(1, 3);
     }   
   }
   
-  double[] forward_prop(double[] input_) {
+  Matrix[] _initCA(){
+    Matrix[] ca = new Matrix[structure.length];
+    for(int i=0; i<structure.length; i++){
+      ca[i] = new Matrix(structure[i], 1);
+    }
+    return ca;
+  }
+  
+  double[] activate(double[] input_) {
     if(input_.length == structure[0]){
       Matrix input = new Matrix(input_, structure[0]);
-      //print("NN input:");
-      //input.print(1, 3);
+      assert currentActivation[0].getRowDimension() == input.getRowDimension();
+      assert currentActivation[0].getColumnDimension() == input.getColumnDimension();
+      currentActivation[0] = input;
       for(int i=0; i<weights.length; i++){
         Matrix a1 = weights[i].times(input);
         input = sigmoid((a1).plus(bias[i]));
-        //print("NN temp "+ i);
-        //input.print(1, 3);
+        assert currentActivation[i+1].getRowDimension() == input.getRowDimension();
+        assert currentActivation[i+1].getColumnDimension() == input.getColumnDimension();
+        currentActivation[i+1] = input;
       }
-      //print("NN output:");
-      //input.print(1, 3);
       return input.getColumnPackedCopy();
     } else {
       return new double[structure[-1]];
@@ -114,6 +121,50 @@ class NeuralNetwork {
       n_bias[i] = new Matrix(b_new, b_rows);
     }
     return new NeuralNetwork(structure, n_weights, n_bias);
+  }
+  
+}
+
+class NeuralActivation {
+  
+  Integer[] _structure;
+  Integer _columns;
+  Integer _maxRows;
+  NeuralNetwork _nn;
+  
+  NeuralActivation(NeuralNetwork nn){
+    _nn = nn;
+    _structure = nn.structure;
+    _columns = _structure.length;
+    _maxRows = getMax(_structure);    
+  }
+  
+  void draw(int x,  int y){
+    // TODO: Find a good way to normalize the neuron' colors.
+    // Input and output should be normalized differently. 
+    // ReLU vs Sigmoid should also be different
+    
+    int h = 20;
+    int w = 60;
+    int radius = 15;
+    
+    pushMatrix();
+    translate(x, y);
+    fill(225, 227, 227, 200);
+    rect(-20, 0, (_columns-1) * w + radius + 20, _maxRows * h);
+    Matrix[] ca = _nn.currentActivation;
+    for (int i=0; i<_structure.length; i++){
+      double[] cl = ca[i].getColumnPackedCopy();
+      double cl_max = getMax(cl);
+      double cl_min = getMin(cl);
+      for(int j=0; j<_structure[i]; j++){
+        float vY = (_maxRows * h) / (_structure[i] + 1);
+        fill(Math.round(255*(cl[j]-cl_min)/(cl_max-cl_min)));
+        circle(i*w, vY*j + vY, radius);
+      }
+    }
+    popMatrix();
+  
   }
   
 }

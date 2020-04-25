@@ -2,7 +2,7 @@ Environment environment;
 Splash splash;
 Background background;
 
-int speed = 30;
+int speed = 60;
 boolean started = false;
 long bestScore = 0;
 

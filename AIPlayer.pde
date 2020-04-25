@@ -44,11 +44,7 @@ class AIPlayer implements Comparable<AIPlayer>{
   
   void updateControls(){ 
     double[] input = new double[]{hDistance/width, vDistance/height, vSpeed/20};
-    double[] output = nn.forward_prop(input);
-    //if(id == 0){
-    //  print(input[0]+" "+input[1]+"\n");
-    //  print(output[0]+"\n");
-    //}
+    double[] output = nn.activate(input);
     flap = output[0] > 0.5;
   }
   

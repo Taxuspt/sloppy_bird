@@ -2,8 +2,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-int[] getDefaultStruct(){
-  return new int[]{3, 6, 4, 1};
+Integer[] getDefaultStruct(){
+  return new Integer[]{3, 6, 4, 1};
 }
 
 BrainStruct loadBrainStruct(String path){
@@ -20,7 +20,7 @@ BrainStruct loadBrainStruct(String path){
   }
   print("Loaded file"+"\n");
   JSONArray jStructure = (JSONArray)jBrain.get("structure");
-  int[] structure = new int[jStructure.length()];
+  Integer[] structure = new Integer[jStructure.length()];
   for(int i=0; i<jStructure.length(); i++){
     try {
       structure[i] = (int)(jStructure.get(i));
@@ -67,11 +67,11 @@ BrainStruct loadBrainStruct(String path){
 }
 
 class BrainStruct{
-  int[] structure;
+  Integer[] structure;
   Matrix[] W;
   Matrix[] b;
   
-  BrainStruct(int[] structure_, Matrix[] W_, Matrix[] b_){
+  BrainStruct(Integer[] structure_, Matrix[] W_, Matrix[] b_){
     structure = structure_;
     W = W_;
     b = b_;
