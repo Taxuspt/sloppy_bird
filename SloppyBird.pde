@@ -2,7 +2,7 @@ Environment environment;
 Splash splash;
 Background background;
 
-int speed = 60;
+int speed = 40;
 boolean started = false;
 long bestScore = 0;
 
@@ -15,6 +15,14 @@ void setup(){
   
   splash = new Splash();
   background = new Background();
+  print("Width is: "+ width + "\n");
+  print("Height is: "+ height + "\n");
+  
+  //Matrix b = Matrix.random(4,2);
+  //b.print(1,3);
+  //for(double v: b.getColumnPackedCopy()) print(v+"; ");
+  //print("\n");
+  //for(double v: b.getRowPackedCopy()) print(v+"; ");
 }
 
 void draw(){

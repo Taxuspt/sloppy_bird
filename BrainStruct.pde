@@ -77,8 +77,8 @@ class BrainStruct{
     b = b_;
   }
       
-  void save(){
-    String path = "brains/brain.json";
+  void save(String name){
+    String path = "brains/brain_"+name+".json";
     JSONObject jBrain = new JSONObject();
     JSONArray jStructure = new JSONArray();
     for(int i=0; i<structure.length; i++){
