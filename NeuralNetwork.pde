@@ -44,7 +44,11 @@ class NeuralNetwork {
       currentActivation[0] = input;
       for(int i=0; i<weights.length; i++){
         Matrix a1 = weights[i].times(input);
-        input = sigmoid((a1).plus(bias[i]));
+        if(i < weights.length-1){
+          input = relu((a1).plus(bias[i]));  
+        } else {
+          input = sigmoid((a1).plus(bias[i])); // Last layer uses a sigmoid instead of ReLU
+        }
         assert currentActivation[i+1].getRowDimension() == input.getRowDimension();
         assert currentActivation[i+1].getColumnDimension() == input.getColumnDimension();
         currentActivation[i+1] = input;
@@ -70,6 +74,23 @@ class NeuralNetwork {
   
   float sigmoid(float x){
     return 1 / (1 + pow((float)Math.E, -x));
+  }
+  
+  Matrix relu(Matrix input){
+    int r = input.getRowDimension();
+    int c = input.getColumnDimension();
+    Matrix n = new Matrix(r, c);
+    for(int i=0; i<r; i++){
+      for(int j=0; j<c; j++){
+        float v = relu((float)input.get(i, j));
+        n.set(i, j, v);
+      }
+    }
+    return n;
+  }
+  
+  float relu(float x){
+    return x > 0? x : 0;
   }
   
   // Mutations and crossovers
